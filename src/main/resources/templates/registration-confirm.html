@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Xác nhận đăng ký</title>
+</head>
+<body>
+<h2>Xin chào <span th:text="${name}">User</span>,</h2>
+<p>Cảm ơn bạn đã đăng ký. Vui lòng bấm vào đường dẫn bên dưới để xác nhận tài khoản:</p>
+<p><a th:href="${confirmUrl}" th:text="${confirmUrl}">Xác nhận tài khoản</a></p>
+<p>Nếu bạn không thực hiện hành động này, hãy bỏ qua email.</p>
+<hr/>
+<small>Đội ngũ của bạn</small>
+</body>
+</html>

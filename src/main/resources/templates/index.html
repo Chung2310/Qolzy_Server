@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio của Tôi</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <img th:src="@{/images/anhmeo1.jpg}" alt="Avatar" class="avatar">
+    <h1 th:text="${name}"></h1>
+    <p>Developer | Portfolio</p>
+</header>
+
+<section id="about">
+    <h2>Giới thiệu</h2>
+    <p class="indent">
+        Xin chào! Mình là <strong>Chung Đỗ</strong>, hiện đang là sinh viên ngành <strong>Kỹ thuật Máy tính</strong> tại
+        <strong>Trường Kỹ thuật Công Nghiệp - Đại học Thái Nguyên</strong>.
+        Mình đam mê lập trình và phát triển phần mềm, đặc biệt là các ứng dụng di động và hệ thống Back-end.
+    </p>
+    <p class="indent">
+        Trong quá trình học tập, mình đã tích lũy kinh nghiệm phát triển ứng dụng trên <strong>Android Studio</strong>,
+        từ việc thiết kế giao diện đến triển khai logic nghiệp vụ. Đồng thời, mình cũng xây dựng các API Back-end
+        sử dụng <strong>Java Spring Boot</strong> để phục vụ các ứng dụng và dịch vụ web.
+    </p>
+    <p class="indent">
+        Mình luôn hứng thú với việc học hỏi công nghệ mới, tìm hiểu các framework hiện đại,
+        và tham gia vào các dự án thực tế để nâng cao kỹ năng lập trình. Mục tiêu của mình là trở thành một
+        Full-stack Developer có khả năng phát triển ứng dụng từ front-end đến back-end,
+        đồng thời áp dụng tốt các chuẩn công nghiệp và best practices trong lập trình.
+    </p>
+    <p><strong>Công nghệ và kỹ năng đã sử dụng:</strong></p>
+    <ul>
+        <li class="indent">Android Studio (Mobile App Development)</li>
+        <li class="indent">Java Spring Boot (Back-end API)</li>
+        <li class="indent">Git / GitHub (Version Control)</li>
+        <li class="indent">SQL / MySQL (Database Management)</li>
+    </ul>
+</section>
+
+
+<section id="projects">
+    <h2>Dự án</h2>
+
+    <h3>Dự án Android</h3>
+    <ul>
+        <li th:each="entry : ${androidProjects}">
+            <a th:href="${entry.value}" th:text="${entry.key}" target="_blank"></a>
+        </li>
+    </ul>
+
+    <h3>Dự án Back-end</h3>
+    <ul>
+        <li th:each="entry : ${backendProjects}">
+            <a th:href="${entry.value}" th:text="${entry.key}" target="_blank"></a>
+        </li>
+    </ul>
+</section>
+
+
+<section id="files">
+    <h2>File tải về</h2>
+    <ul>
+        <li th:each="f : ${files}">
+            <a th:href="@{/files/{fileName}(fileName=${f})}" th:text="${f}" target="_blank"></a>
+        </li>
+    </ul>
+</section>
+
+<footer>
+    <p>Liên hệ:</p>
+    <ul>
+        <li>Email: <a th:href="'mailto:' + ${email}" th:text="${email}"></a></li>
+        <li>Facebook: <a th:href="${facebook}" target="_blank">Đỗ Đức Chung</a></li>
+        <li>Github: <a th:href="${github}" target="_blank">Chung2310</a></li>
+    </ul>
+</footer>
+
+</body>
+</html>
