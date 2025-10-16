@@ -12,10 +12,11 @@
     <p>Developer | Portfolio</p>
 </header>
 
+<!-- Giới thiệu -->
 <section id="about">
     <h2>Giới thiệu</h2>
     <p class="indent">
-        Xin chào! Mình là <strong>Chung Đỗ</strong>, hiện đang là sinh viên ngành <strong>Kỹ thuật Máy tính</strong> tại
+        Xin chào! Mình là <strong>Đỗ Đức Chung</strong>, hiện đang là sinh viên ngành <strong>Kỹ thuật Máy tính</strong> tại
         <strong>Trường Kỹ thuật Công Nghiệp - Đại học Thái Nguyên</strong>.
         Mình đam mê lập trình và phát triển phần mềm, đặc biệt là các ứng dụng di động và hệ thống Back-end.
     </p>
@@ -30,35 +31,59 @@
         Full-stack Developer có khả năng phát triển ứng dụng từ front-end đến back-end,
         đồng thời áp dụng tốt các chuẩn công nghiệp và best practices trong lập trình.
     </p>
-    <p><strong>Công nghệ và kỹ năng đã sử dụng:</strong></p>
+</section>
+
+<!-- Kinh nghiệm -->
+<section id="experience">
+    <h2>Kinh nghiệm</h2>
     <ul>
-        <li class="indent">Android Studio (Mobile App Development)</li>
-        <li class="indent">Java Spring Boot (Back-end API)</li>
-        <li class="indent">Git / GitHub (Version Control)</li>
-        <li class="indent">SQL / MySQL (Database Management)</li>
+        <li><strong>Thực tập Backend Java Developer</strong> – Tham gia xây dựng REST API với Spring Boot, kết nối MySQL tại công ty Cổ Phần Atomi Digital</li>
+        <li><strong>Thực tập Android Developer</strong> – Phát triển ứng dụng Android, tích hợp Firebase Auth và API tại công ty TNHH Công Nghệ VNET</li>
     </ul>
 </section>
 
+<!-- Kỹ năng -->
+<section id="skills">
+    <h2>Kỹ năng</h2>
+    <ul>
+        <li>Java / Kotlin</li>
+        <li>Spring Boot</li>
+        <li>Android Studio</li>
+        <li>SQL / MySQL</li>
+        <li>Git / GitHub</li>
+    </ul>
+</section>
 
+<!-- Dự án -->
 <section id="projects">
     <h2>Dự án</h2>
 
-    <h3>Dự án Android</h3>
-    <ul>
-        <li th:each="entry : ${androidProjects}">
-            <a th:href="${entry.value}" th:text="${entry.key}" target="_blank"></a>
-        </li>
-    </ul>
+    <div class="project-category">
+        <h3>Dự án Android</h3>
+        <div class="project-grid">
+            <div class="project-card" th:each="p : ${androidProjects}">
+                <h4 th:text="${p.name}"></h4>
+                <p th:text="${p.description}"></p>
+                <a th:href="${p.url}" target="_blank" class="btn">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
 
-    <h3>Dự án Back-end</h3>
-    <ul>
-        <li th:each="entry : ${backendProjects}">
-            <a th:href="${entry.value}" th:text="${entry.key}" target="_blank"></a>
-        </li>
-    </ul>
+    <div class="project-category">
+        <h3>Dự án Back-end</h3>
+        <div class="project-grid">
+            <div class="project-card" th:each="p : ${backendProjects}">
+                <h4 th:text="${p.name}"></h4>
+                <p th:text="${p.description}"></p>
+                <a th:href="${p.url}" target="_blank" class="btn">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
 </section>
 
 
+
+<!-- File tải về -->
 <section id="files">
     <h2>File tải về</h2>
     <ul>
@@ -68,8 +93,9 @@
     </ul>
 </section>
 
+<!-- Liên hệ -->
 <footer>
-    <p>Liên hệ:</p>
+    <h2>Liên hệ</h2>
     <ul>
         <li>Email: <a th:href="'mailto:' + ${email}" th:text="${email}"></a></li>
         <li>Facebook: <a th:href="${facebook}" target="_blank">Đỗ Đức Chung</a></li>

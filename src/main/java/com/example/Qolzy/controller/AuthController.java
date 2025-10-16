@@ -1,15 +1,13 @@
 package com.example.Qolzy.controller;
 
+import com.example.Qolzy.dto.UserEntityDTO;
 import com.example.Qolzy.model.ApiResponse;
 import com.example.Qolzy.model.auth.*;
 import com.example.Qolzy.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -36,5 +34,10 @@ public class AuthController {
     @PostMapping("/refreshToken")
     public ResponseEntity<ApiResponse<RefreshTokenRequest>> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         return authService.refreshToken(refreshTokenRequest);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<ApiResponse<UserEntityDTO>> getUserDetail(@RequestParam Long userId) {
+        return authService.getUserDetail(userId);
     }
 }

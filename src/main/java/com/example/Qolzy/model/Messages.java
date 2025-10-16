@@ -12,6 +12,7 @@ public class Messages {
     public static final String STORY_VIEW_CREATED = "Người dùng xem story thành công";
     public static final String POST_UPDATED = "Cập nhật bài viết thành công";
     public static final String POST_DELETED = "Xóa bài viết thành công";
+    public static final String REEL_ = "Xóa bài viết thành công";
 
     // Thông báo chung cho user
     public static final String USER_NOT_FOUND = "Người dùng không tồn tại";

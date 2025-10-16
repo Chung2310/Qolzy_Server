@@ -16,7 +16,8 @@ public class FollowController {
     private FollowService followService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> createFollow(Long followerId, Long followingId) {
+    public ResponseEntity<ApiResponse<String>> createFollow(@RequestParam Long followerId,
+                                                            @RequestParam Long followingId) {
         return followService.createFollow(followerId, followingId);
     }
 

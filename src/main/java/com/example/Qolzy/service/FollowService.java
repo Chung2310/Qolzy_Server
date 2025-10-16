@@ -43,14 +43,6 @@ public class FollowService {
             return ResponseHandler.generateResponse(Messages.MISSING_REQUIRED_INFO, HttpStatus.BAD_REQUEST, null);
         }
 
-        // Nếu đã tồn tại follow thì unfollow
-        if (followRepository.existsByFollowerIdAndFollowingId(followerId, followingId)) {
-            followRepository.deleteByFollowerIdAndFollowingId(followerId, followingId);
-            log.info("[Follow] User {} đã hủy follow user {}", followerId, followingId);
-            return ResponseHandler.generateResponse(Messages.FOLLOW_DELETE, HttpStatus.OK, null);
-        }
-
-        // Kiểm tra user tồn tại
         UserEntity userFollower = userService.findUserByUserId(followerId);
         UserEntity userFollowing = userService.findUserByUserId(followingId);
 
@@ -63,14 +55,35 @@ public class FollowService {
             return ResponseHandler.generateResponse(Messages.USER_NOT_FOUND, HttpStatus.NOT_FOUND, null);
         }
 
+        if (followRepository.existsByFollowerIdAndFollowingId(followerId, followingId)) {
+            followRepository.deleteByFollowerIdAndFollowingId(followerId, followingId);
+            log.info("[Follow] User {} đã hủy follow user {}", followerId, followingId);
+            userFollower.setFollowersCount(userFollower.getFollowersCount() - 1);
+            userFollowing.setFollowingCount(userFollowing.getFollowingCount() - 1);
+            userService.saveUser(userFollower);
+            userService.saveUser(userFollowing);
+            return ResponseHandler.generateResponse(Messages.FOLLOW_DELETE, HttpStatus.OK, null);
+        }
+
         // Tạo follow mới
         Follow follow = new Follow();
         follow.setFollower(userFollower);
         follow.setFollowing(userFollowing);
+        userFollower.setFollowersCount(userFollower.getFollowersCount() + 1);
+        userFollowing.setFollowingCount(userFollowing.getFollowingCount() + 1);
+        userService.saveUser(userFollower);
+        userService.saveUser(userFollowing);
         followRepository.save(follow);
 
         log.info("[Follow] User {} đã follow user {}", followerId, followingId);
         return ResponseHandler.generateResponse(Messages.FOLLOW_CREATE, HttpStatus.CREATED, null);
+    }
+
+
+    public boolean getFollowByFollowedAndFollowing(Long followerId, Long followingId) {
+        if (followerId == followingId) {
+            return true;
+        } else return followRepository.existsByFollowerIdAndFollowingId(followerId, followingId);
     }
 
     public ResponseEntity<ApiResponse<List<FollowResponse>>> getFollows(Long userId, int page, int size) {

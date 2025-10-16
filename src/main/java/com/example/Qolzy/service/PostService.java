@@ -4,10 +4,7 @@ import com.example.Qolzy.mapper.PostMapper;
 import com.example.Qolzy.model.*;
 import com.example.Qolzy.model.auth.UserEntity;
 import com.example.Qolzy.model.music.Music;
-import com.example.Qolzy.model.post.Post;
-import com.example.Qolzy.model.post.PostMedia;
-import com.example.Qolzy.model.post.PostReponse;
-import com.example.Qolzy.model.post.PostRequest;
+import com.example.Qolzy.model.post.*;
 import com.example.Qolzy.repository.MusicRepository;
 import com.example.Qolzy.repository.PostMediaRepository;
 import com.example.Qolzy.repository.PostRepository;
@@ -23,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +38,9 @@ public class PostService {
     private UserService userService;
 
     @Autowired
+    private ReelService reelService;
+
+    @Autowired
     private MediaService mediaService;
 
     @Autowired
@@ -47,6 +48,9 @@ public class PostService {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private FollowService followService;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -58,7 +62,10 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public ResponseEntity<ApiResponse<String>> createPost(String content, Long userId, Music music) throws IOException {
+    public ResponseEntity<ApiResponse<String>> createPost(CreatePostRequest createPostRequest) {
+        String content = createPostRequest.getContent();
+        Long userId = createPostRequest.getUserId();
+        Music music = createPostRequest.getMusic();
         log.info("Bắt đầu tạo post cho userId: {}", userId);
 
         // Kiểm tra dữ liệu đầu vào
@@ -134,13 +141,17 @@ public class PostService {
                 postMedia.setPost(post);
                 postMediaRepository.save(postMedia);
 
+                if(postMedia.getType() == PostMedia.MediaType.VIDEO){
+                    reelService.createReels(postId, fileName);
+                }
+
                 log.info("Đã lưu file '{}' loại={} cho postId={}", fileName, mediaType, post.getId());
             }
         } else {
             log.info("Không có file đính kèm");
         }
 
-        return ResponseHandler.generateResponse(Messages.POST_FILE_CREATED, HttpStatus.OK, null);
+        return ResponseHandler.generateResponse(Messages.POST_CREATED, HttpStatus.CREATED, null);
     }
 
     public ResponseEntity<ApiResponse<List<PostReponse>>> getPosts(int page, int size, Long userId) {
@@ -153,6 +164,7 @@ public class PostService {
 
         for (PostReponse postReponse: postReponseList){
             postReponse.setLikedByCurrentUser(likeService.getLikeByPostAndUserId(postReponse.getId(), userId));
+            postReponse.setFollowByCurrentUser(followService.getFollowByFollowedAndFollowing(userId,postReponse.getUser().getId()));
         }
         log.debug("[getPosts] Số lượng bài viết lấy được lấy được: {}", postReponseList.size());
 
@@ -224,4 +236,6 @@ public class PostService {
         log.info("[deletePost] Xóa thành công bài viết với id={}", postId);
         return ResponseHandler.generateResponse(Messages.POST_DELETED, HttpStatus.OK, null);
     }
+
+
 }

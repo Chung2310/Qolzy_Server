@@ -4,6 +4,7 @@ import com.example.Qolzy.model.ApiResponse;
 import com.example.Qolzy.model.Messages;
 import com.example.Qolzy.model.ResponseHandler;
 import com.example.Qolzy.model.music.Music;
+import com.example.Qolzy.model.post.CreatePostRequest;
 import com.example.Qolzy.model.post.Post;
 import com.example.Qolzy.model.post.PostReponse;
 import com.example.Qolzy.model.post.PostRequest;
@@ -11,6 +12,7 @@ import com.example.Qolzy.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,10 +40,8 @@ public class PostController {
     }
 
     @PostMapping()
-    public ResponseEntity<ApiResponse<String>> createPost(@RequestParam(required = false) String content,
-                                                          @RequestParam Long userId,
-                                                          @RequestBody(required = false) Music music) throws IOException {
-        return postService.createPost(content,userId,music);
+    public ResponseEntity<ApiResponse<String>> createPost(@RequestBody CreatePostRequest createPostRequest) {
+        return postService.createPost(createPostRequest);
     }
 
     @PostMapping("/upload")
@@ -59,4 +59,5 @@ public class PostController {
     public ResponseEntity<ApiResponse<String>> deletePost(@RequestParam Long postId) {
         return postService.deletePost(postId);
     }
+
 }

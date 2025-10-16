@@ -21,8 +21,7 @@ public class UserEntity {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "Email không được để trống")
-    @Email(message = "Email không hợp lệ")
+
     private String email;
     private String firstName;
     private String lastName;

@@ -14,11 +14,21 @@ public class UserEntityDTO {
     private String lastName;
     private String avatarUrl;
     private String backgroundUrl;
+    private String userName;
     private String phone;
     private String address;
     private String role;
     private Long followersCount;
     private Long followingCount;
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Long getId() {
         return id;

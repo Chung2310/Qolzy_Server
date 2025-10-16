@@ -3,6 +3,7 @@ package com.example.Qolzy.model.post;
 import com.example.Qolzy.dto.PostMediaDTO;
 import com.example.Qolzy.dto.UserEntityDTO;
 import com.example.Qolzy.model.music.Music;
+import com.example.Qolzy.model.music.MusicDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,10 +14,19 @@ public class PostReponse {
     private int likes;
     private String content;
     private int comments;
-    private Music music;
+    private MusicDTO music;
     private Boolean likedByCurrentUser;
     private List<PostMediaDTO> medias;
     private LocalDateTime createAt;
+    private Boolean followByCurrentUser;
+
+    public Boolean getFollowByCurrentUser() {
+        return followByCurrentUser;
+    }
+
+    public void setFollowByCurrentUser(Boolean followByCurrentUser) {
+        this.followByCurrentUser = followByCurrentUser;
+    }
 
     public Boolean getLikedByCurrentUser() {
         return likedByCurrentUser;
@@ -34,11 +44,11 @@ public class PostReponse {
         this.createAt = createAt;
     }
 
-    public Music getMusic() {
+    public MusicDTO getMusic() {
         return music;
     }
 
-    public void setMusic(Music music) {
+    public void setMusic(MusicDTO music) {
         this.music = music;
     }
 

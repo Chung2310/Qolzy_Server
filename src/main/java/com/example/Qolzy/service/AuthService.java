@@ -1,10 +1,12 @@
 package com.example.Qolzy.service;
 
+import com.example.Qolzy.dto.UserEntityDTO;
 import com.example.Qolzy.model.ApiResponse;
 import com.example.Qolzy.model.Messages;
 import com.example.Qolzy.model.ResponseHandler;
 import com.example.Qolzy.model.auth.*;
 import com.example.Qolzy.mapper.UserMapper;
+import com.example.Qolzy.repository.UserRepository;
 import com.example.Qolzy.security.JwtTokenProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
@@ -38,6 +40,8 @@ public class AuthService implements UserDetailsService {
     private UserMapper userMapper;
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -246,5 +250,24 @@ public class AuthService implements UserDetailsService {
         // regex: chỉ a-z, A-Z, 0-9, . và _
         String regex = "^(?=.{3,30}$)(?![._])(?!.*[._]{2})[a-zA-Z0-9._]+(?<![._])$";
         return username.matches(regex);
+    }
+
+    public ResponseEntity<ApiResponse<UserEntityDTO>> getUserDetail(Long userId) {
+        log.info("Start getUserDetail with userId: {}", userId);
+
+        if (userId == null) {
+            log.warn("getUserDetail failed: userId is null");
+            return ResponseHandler.generateResponse(Messages.MISSING_REQUIRED_INFO, HttpStatus.BAD_REQUEST, null);
+        }
+
+        UserEntity userEntity = userRepository.findUserById(userId);
+        if (userEntity == null) {
+            log.warn("getUserDetail failed: User not found for userId {}", userId);
+            return ResponseHandler.generateResponse(Messages.USER_NOT_FOUND, HttpStatus.NOT_FOUND, null);
+        }
+
+        UserEntityDTO userEntityDTO = userMapper.toUserEntityDTO(userEntity);
+        log.info("getUserDetail success: returning data for userId {}", userId);
+        return ResponseHandler.generateResponse(Messages.DATA_FETCH_SUCCESS, HttpStatus.OK, userEntityDTO);
     }
 }

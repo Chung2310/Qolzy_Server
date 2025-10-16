@@ -1,16 +1,6 @@
 package com.example.Qolzy.model.music;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
-import jakarta.persistence.*;
-
-@Entity
-public class Music {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idM;
-
+public class MusicDTO {
     private String id;
 
     private String name;
@@ -34,14 +24,6 @@ public class Music {
     private boolean audiodownload_allowed;
 
     private String image;
-
-    public Long getIdM() {
-        return idM;
-    }
-
-    public void setIdM(Long idM) {
-        this.idM = idM;
-    }
 
     public String getId() {
         return id;

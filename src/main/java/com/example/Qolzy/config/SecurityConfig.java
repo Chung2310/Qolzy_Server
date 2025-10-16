@@ -35,7 +35,7 @@ public class SecurityConfig {
                                 "/uploads/**","/api/auth/forgot","/reset-password", "/", "/css/**", "/images/**",
                                 "api/auth/reset").permitAll()
                         .requestMatchers("/api/post/**","/api/like","/api/comment/**","/api/follow/**",
-                                "/api/upload/**", "/api/story/**").permitAll()
+                                "/api/upload/**", "/api/story/**","/api/reels/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
