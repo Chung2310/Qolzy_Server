@@ -42,9 +42,10 @@ public class Messages {
     public static final String GET_COMMENT_SUCCESS = "Lấy comment thành công thành công!";
 
     //Thông báo chung cho chat, message, contact
-    public static final String CHAT_MESSAGE_SENT_SUCCESS = "Lưu tin nhắn thành công!";
-    public static final String CHAT_HISTORY_FETCH_SUCCESS = "Lấy danh sách lịch sử thành công!";
+    public static final String CHAT_MESSAGE_SENT_SUCCESS = "Gửi tin nhắn thành công!";
+    public static final String CHAT_HISTORY_FETCH_SUCCESS = "Lấy danh sách lịch sử liên hệ thành công!";
     public static final String CONTACT_CREATED_SUCCESS = "Tạo liên hệ thành công!";
+    public static final String CONTACT_ALREADY_EXISTS = "Liên hệ đã tồn tại!";
     public static final String CONTACT_DELETED_SUCCESS = "Xoá liên hệ thành công!";
 
     //Thông báo chung cho đánh giá, like đánh giá

@@ -33,12 +33,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/refreshToken",
                                 "/api/auth/firebase","/api/user/username",
                                 "/uploads/**","/api/auth/forgot","/reset-password", "/", "/css/**", "/images/**",
-                                "api/auth/reset").permitAll()
-                        .requestMatchers("/api/post/**","/api/like","/api/comment/**","/api/follow/**",
-                                "/api/upload/**", "/api/story/**","/api/reels/**").permitAll()
+                                "api/auth/reset","/chat/**").permitAll()
+                        .requestMatchers("/api/post/**","/api/like","/api/comment/**","/api/follow/**","/api/message/**",
+                                "/api/upload/**", "/api/story/**","/api/reels/**","/api/auth/user/**", "/api/contact/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
+
                 )
+
                 .addFilterBefore((Filter) jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
